@@ -1,4 +1,4 @@
-import main.kotlin.utilities.menu
+import utilities.menu
 
 
 fun main() {

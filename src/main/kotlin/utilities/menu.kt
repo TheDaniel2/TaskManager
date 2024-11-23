@@ -1,4 +1,4 @@
-package main.kotlin.utilities
+package utilities
 
 fun menu(options: Array<String>, functions: Array<() -> Unit>): Boolean{
 

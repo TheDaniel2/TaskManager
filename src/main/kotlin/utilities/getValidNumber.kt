@@ -1,4 +1,4 @@
-package main.kotlin.utilities
+package utilities
 
 fun getValidNumber(range: IntRange): Int {
     var option: Int

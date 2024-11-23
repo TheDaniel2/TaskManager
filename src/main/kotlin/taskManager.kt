@@ -1,4 +1,4 @@
-import main.kotlin.utilities.getValidNumber
+import utilities.getValidNumber
 
 
 val taskList = TaskList()
