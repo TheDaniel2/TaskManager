@@ -1,20 +1,20 @@
 package main.kotlin
 
+import TaskList
 import main.kotlin.utilities.getValidNumber
 
 
-val taskList : ArrayList<Task> = arrayListOf()
+val taskList = TaskList()
 
 fun addTask(){
     print("What is task name?: ")
     val name: String = readln().uppercase()
-    val newTask = Task(name)
-    taskList.add(newTask)
+    taskList.add(name)
     println("\n The task $name was been added\n")
 }
 
 fun deleteTask(){
-    taskManager("deleted") { task -> taskList.remove(task) }
+    taskManager("deleted") { task -> taskList.delete(task) }
 }
 
 fun markAsDone(){
@@ -42,7 +42,7 @@ fun showTaskList(){
         return
     }
 
-    for((index, task) in taskList.withIndex()){
+    for((index, task) in taskList.getAll().withIndex()){
         println("${index + 1}. $task")
     }
     println()
@@ -62,8 +62,8 @@ fun selectTask(action: String): Task {
     println("Select the task that you want to be $action:\n")
     showTaskList()
 
-    val index = getValidNumber(1..taskList.size) - 1
-    val task = taskList[index]
+    val index = getValidNumber(1..taskList.size()) - 1
+    val task = taskList.getTask(index)
     return task
 }
 
