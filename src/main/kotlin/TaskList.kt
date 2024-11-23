@@ -1,5 +1,3 @@
-import main.kotlin.Task;
-
 class TaskList(private val taskList: ArrayList<Task> = arrayListOf()) {
     fun add(newTaskName: String){
         taskList.add(Task(newTaskName))
@@ -17,11 +15,12 @@ class TaskList(private val taskList: ArrayList<Task> = arrayListOf()) {
         return taskList.listIterator()
     }
 
-    fun getTask(index: Int): Task{
+    fun getTask(index: Int): Task {
         return taskList[index]
     }
 
     fun size(): Int{
         return taskList.size
     }
+
 }

@@ -1,6 +1,3 @@
-package main.kotlin
-
-import TaskList
 import main.kotlin.utilities.getValidNumber
 
 
@@ -25,7 +22,7 @@ fun editTask(){
     taskManager("edited") { task ->
         println("Editing task name. Leave blank to maintain the original name.\n")
 
-        print("${ task.name } -> New name: ")
+        print("${task.name} -> New name: ")
         val newName = readln().uppercase()
 
         if (newName == "") {
@@ -54,7 +51,7 @@ fun confirmToContinue(ifYes: () -> Unit, taskName: String, action: String){
 
     if(confirm == "y"){
         ifYes()
-        println("\n The task $taskName was been $action.\n")
+        println("\n The task $taskName has been $action.\n")
     }
 }
 

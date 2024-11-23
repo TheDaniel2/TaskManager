@@ -1,5 +1,3 @@
-package main.kotlin
-
 import main.kotlin.utilities.menu
 
 
