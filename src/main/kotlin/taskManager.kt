@@ -2,11 +2,6 @@ package main.kotlin
 
 import main.kotlin.utilities.getValidNumber
 
-data class Task(var name: String, var isDone: Boolean = false){
-    override fun toString(): String {
-        return "${ this.name } - ${ if(this.isDone) "Done" else "Not Done" }"
-    }
-}
 
 val taskList : ArrayList<Task> = arrayListOf()
 
