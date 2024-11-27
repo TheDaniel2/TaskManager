@@ -17,4 +17,21 @@ class TaskManagerTest {
         assertFalse(task.isDone)
     }
 
+    @Test
+    fun testDeleteTask(){
+        val tl = TaskList()
+
+        tl.add("Test task 01")
+        tl.add("Test task 02")
+
+        val task01 = tl.getTask(0)
+
+        assertEquals(2, tl.size())
+        assertEquals("Test task 01", task01.name)
+
+        tl.delete(task01)
+
+        assertEquals(1, tl.size())
+        assertEquals("Test task 02", tl.getTask(0).name)
+    }
 }
