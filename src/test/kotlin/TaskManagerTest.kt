@@ -34,4 +34,19 @@ class TaskManagerTest {
         assertEquals(1, tl.size())
         assertEquals("Test task 02", tl.getTask(0).name)
     }
+
+    @Test
+    fun testMarkAsDone(){
+        val tl = TaskList()
+
+        tl.add("Test task 01")
+
+        val task01 = tl.getTask(0)
+
+        assertEquals("${task01.name} - Not Done", task01.toString())
+
+        task01.isDone = true
+
+        assertEquals("${task01.name} - Done", task01.toString())
+    }
 }
