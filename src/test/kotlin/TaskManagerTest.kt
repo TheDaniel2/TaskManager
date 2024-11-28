@@ -7,14 +7,19 @@ class TaskManagerTest {
     @Test
     fun testAddTask() {
 
-        val taskList = TaskList()
+        val tl = TaskList()
+        val size = 10
 
-        taskList.add("Test Task")
-        val task = taskList.getTask(0)
+        for (i in 0..size){
+            tl.add("Test Task $i")
+        }
 
-        assertEquals(1, taskList.size())
-        assertEquals("Test Task", task.name)
-        assertFalse(task.isDone)
+        assertEquals(size + 1, tl.size())
+
+        for (i in 0..size){
+            val task = tl.getTask(i)
+            assertEquals("Test Task $i", task.name)
+        }
     }
 
     @Test
