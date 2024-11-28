@@ -18,7 +18,7 @@ fun markAsDone(){
     taskManager("marked as done") { task -> task.isDone = true }
 }
 
-fun editName(){
+fun editTaskName(){
     taskManager("edited") { task ->
         println("Editing task name. Leave blank to maintain the original name.\n")
 

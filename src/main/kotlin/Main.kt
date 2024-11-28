@@ -12,7 +12,7 @@ fun main() {
             { showTaskList() },
             { markAsDone() },
             { deleteTask() },
-            { editName() }
+            { editTaskName() }
         )
 
     }while(menu(options, functions))
