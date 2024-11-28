@@ -39,14 +39,32 @@ class TaskManagerTest {
     fun testMarkAsDone(){
         val tl = TaskList()
 
-        tl.add("Test task 01")
+        tl.add("Test task")
 
-        val task01 = tl.getTask(0)
+        val task = tl.getTask(0)
 
-        assertEquals("${task01.name} - Not Done", task01.toString())
+        assertEquals("${task.name} - Not Done", task.toString())
 
-        task01.isDone = true
+        task.isDone = true
 
-        assertEquals("${task01.name} - Done", task01.toString())
+        assertEquals("${task.name} - Done", task.toString())
+    }
+
+    @Test
+    fun testEditName(){
+        val tl = TaskList()
+
+        val theOriginalName = "Test task"
+        val newName = "Test task 02"
+
+        tl.add(theOriginalName)
+
+        val task = tl.getTask(0)
+
+        assertEquals("Test task", task.name)
+
+        task.name = newName
+
+        assertEquals(newName, task.name)
     }
 }
