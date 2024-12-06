@@ -10,9 +10,9 @@ fun main() {
         val functions = arrayOf(
             { addTask() },
             { showTaskList() },
-            { markAsDone() },
-            { deleteTask() },
-            { editTaskName() }
+//            { markAsDone() },
+//            { deleteTask() },
+//            { editTaskName() }
         )
 
     }while(menu(options, functions))
