@@ -2,44 +2,54 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 
-//class TaskManagerTest {
-//
-//    @Test
-//    fun testAddTask() {
-//
-//        val tl = TaskList()
-//        val size = 10
-//
-//        for (i in 0..size){
-//            tl.add("Test Task $i")
-//        }
-//
-//        assertEquals(size + 1, tl.size())
-//
-//        for (i in 0..size){
-//            val task = tl.getTask(i)
-//            assertEquals("Test Task $i", task.name)
-//        }
-//    }
-//
-//    @Test
-//    fun testDeleteTask(){
-//        val tl = TaskList()
-//
-//        tl.add("Test task 01")
-//        tl.add("Test task 02")
-//
-//        val task01 = tl.getTask(0)
-//
-//        assertEquals(2, tl.size())
-//        assertEquals("Test task 01", task01.name)
-//
-//        tl.delete(task01)
-//
-//        assertEquals(1, tl.size())
-//        assertEquals("Test task 02", tl.getTask(0).name)
-//    }
-//
+class TaskManagerTest {
+
+    @Test
+    fun testAddTask() {
+        val taskList = TaskList()
+        val currentSize = taskList.size()
+        val newTaskName = "testTask01 from testAddTask"
+
+        try {
+            taskList.add(newTaskName)
+
+            assertEquals(currentSize + 1, taskList.size())
+
+            val task = taskList.getTask(newTaskName)
+
+            assertNotNull(task, "The task was not found in the database")
+            task?.let { (_, name, isDone) ->
+                assertEquals(newTaskName, name)
+                assertEquals(false, isDone)
+            }
+        } finally {
+            taskList.delete(newTaskName)
+        }
+
+
+    }
+
+    @Test
+    fun testDeleteTask(){
+        val taskList = TaskList()
+        val currentSize = taskList.size()
+        val newTaskName01 = "testTask01 from testDeleteTask"
+
+        try {
+            taskList.add(newTaskName01)
+            assertEquals(currentSize + 1, taskList.size())
+
+            val task = taskList.getTask(newTaskName01)
+            assertNotNull(task, "The task was not found in the database")
+            task?.let{ (_, name, _) ->
+                assertEquals(newTaskName01, name)
+            }
+        }finally {
+            taskList.delete(newTaskName01)
+            assertEquals(null, taskList.getTask(newTaskName01))
+        }
+    }
+}
 //    @Test
 //    fun testMarkAsDone(){
 //        val tl = TaskList()

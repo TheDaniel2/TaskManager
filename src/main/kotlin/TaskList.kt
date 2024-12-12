@@ -1,11 +1,11 @@
 import usingDataBase.connect
 import java.sql.SQLException
 
-data class Task(var name: String, var isDone: Boolean = false){
-    override fun toString(): String {
-        return "${ this.name } - ${ if(this.isDone) "Done" else "Not Done" }"
-    }
-}
+//data class Task(var name: String, var isDone: Boolean = false){
+//    override fun toString(): String {
+//        return "${ this.name } - ${ if(this.isDone) "Done" else "Not Done" }"
+//    }
+//}
 
 
 class TaskList {
@@ -43,16 +43,16 @@ class TaskList {
         }
     }
 
-    fun delete(id: Int){
+    fun delete(name: String){
         val connection = connect()
         try {
             val preparedStatement = connection.prepareStatement(
-                "DELETE FROM tasks WHERE (id) VALUES (?)"
+                "DELETE FROM tasks WHERE name = ?"
             )
-            preparedStatement.setInt(1, id)
+            preparedStatement.setString(1, name)
             preparedStatement.executeUpdate()
 
-            println("\nTask $id has been deleted successfully!\n")
+            println("\nTask $name has been deleted successfully!\n")
         } catch (e: SQLException) {
             println("Error delete task: ${e.message}")
         } finally {
@@ -107,13 +107,44 @@ class TaskList {
         return tasks
     }
 
+    fun getTask(name: String): Triple<Int, String, Boolean>?{
+        val connection = connect()
+        val preparedStatement = connection.prepareStatement("SELECT id, name, isDone FROM tasks WHERE name = ?")
+        preparedStatement.setString(1, name)
 
-    fun getTask(index: Int){
-        //return taskList[index]
+        val result = preparedStatement.executeQuery()
+
+        return if (result.next()) {
+            val taskID = result.getInt("id")
+            val taskName = result.getString("name")
+            val taskIsDone = result.getBoolean("isDone")
+
+            result.close()
+            preparedStatement.close()
+            connection.close()
+
+            Triple(taskID, taskName, taskIsDone)
+        } else {
+            result.close()
+            preparedStatement.close()
+            connection.close()
+
+            null
+        }
     }
 
-    fun size(){
-        //return taskList.size
+    fun size(): Int{
+        val connection = connect()
+        val statement = connection.createStatement()
+        val result = statement.executeQuery("SELECT COUNT(*) FROM tasks")
+
+        val size = result.getInt(1)
+
+        connection.close()
+        statement.close()
+        result.close()
+
+        return size
     }
 
 }
