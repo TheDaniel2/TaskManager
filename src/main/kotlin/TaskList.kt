@@ -43,8 +43,21 @@ class TaskList {
         }
     }
 
-    fun delete(task: Task){
-        //taskList.remove(task)
+    fun delete(id: Int){
+        val connection = connect()
+        try {
+            val preparedStatement = connection.prepareStatement(
+                "DELETE FROM tasks WHERE (id) VALUES (?)"
+            )
+            preparedStatement.setInt(1, id)
+            preparedStatement.executeUpdate()
+
+            println("\nTask $id has been deleted successfully!\n")
+        } catch (e: SQLException) {
+            println("Error delete task: ${e.message}")
+        } finally {
+            connection.close()
+        }
     }
 
     fun isEmpty(): Boolean{
