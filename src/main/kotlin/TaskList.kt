@@ -60,24 +60,33 @@ class TaskList {
         }
     }
 
-    fun isEmpty(): Boolean{
+    fun editTaskName(oldName: String, newName: String) {
         val connection = connect()
-        val statement = connection.createStatement()
-        val resultSet = statement.executeQuery(
-            """
-            SELECT name
-            FROM sqlite_master
-            WHERE type = 'table' AND name NOT LIKE 'sqlite_%'
-            """.trimIndent()
-        )
+        val query = "UPDATE tasks SET name = ? WHERE name = ?"
 
-        val isEmpty = resultSet.next()// Checks if there is at least one result
+        try {
+            val preparedStatement = connection.prepareStatement(query)
+            preparedStatement.use {
+                it.setString(1, newName)
+                it.setString(2, oldName)
+                val rowsAffected = it.executeUpdate()
 
-        resultSet.close()
-        statement.close()
-        connection.close()
+                if (rowsAffected > 0) {
+                    println("\nTask '$oldName' has been successfully updated to '$newName'")
+                } else {
+                    println("\nNo task with name '$oldName' found.")
+                }
+            }
+        } catch (e: SQLException) {
+            println("Error updating task: ${e.message}")
+        } finally {
+            connection.close()
+        }
+    }
 
-        return isEmpty
+
+    fun isEmpty(): Boolean{
+        return size() == 0
     }
 
     fun getFormattedTasks(): List<String> {

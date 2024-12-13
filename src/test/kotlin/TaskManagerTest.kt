@@ -24,6 +24,7 @@ class TaskManagerTest {
             }
         } finally {
             taskList.delete(newTaskName)
+            assertNull(taskList.getTask(newTaskName), "Failed to clean up the test task with the new name.")
         }
 
 
@@ -46,10 +47,10 @@ class TaskManagerTest {
             }
         }finally {
             taskList.delete(newTaskName01)
-            assertEquals(null, taskList.getTask(newTaskName01))
+            assertNull(taskList.getTask(newTaskName01), "Failed to clean up the test task with the new name.")
         }
     }
-}
+
 //    @Test
 //    fun testMarkAsDone(){
 //        val tl = TaskList()
@@ -65,21 +66,37 @@ class TaskManagerTest {
 //        assertEquals("${task.name} - Done", task.toString())
 //    }
 //
-//    @Test
-//    fun testEditName(){
-//        val tl = TaskList()
-//
-//        val theOriginalName = "Test task"
-//        val newName = "Test task 02"
-//
-//        tl.add(theOriginalName)
-//
-//        val task = tl.getTask(0)
-//
-//        assertEquals("Test task", task.name)
-//
-//        task.name = newName
-//
-//        assertEquals(newName, task.name)
-//    }
-//}
+
+    @Test
+    fun testEditName() {
+        val taskList = TaskList()
+        val theOriginalName = "Test task from testEditName"
+        val newName = "Test task 02"
+
+        try {
+
+            taskList.add(theOriginalName)
+
+
+            val oldTask = taskList.getTask(theOriginalName)
+            assertNotNull(oldTask, "The task with the original name was not found in the database.")
+
+
+            taskList.editTaskName(theOriginalName, newName)
+
+
+            assertNull(taskList.getTask(theOriginalName), "The task with the old name still exists in the database.")
+
+
+            val taskWithNewName = taskList.getTask(newName)
+            assertNotNull(taskWithNewName, "The task with the new name was not found in the database.")
+
+            taskWithNewName?.let { (_, updatedName, _) ->
+                assertEquals(newName, updatedName)
+            }
+        } finally {
+            taskList.delete(newName)
+            assertNull(taskList.getTask(newName), "Failed to clean up the test task with the new name.")
+        }
+    }
+}
