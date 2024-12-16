@@ -84,7 +84,6 @@ class TaskList {
         }
     }
 
-
     fun isEmpty(): Boolean{
         return size() == 0
     }
