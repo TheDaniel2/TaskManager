@@ -5,12 +5,12 @@ fun main() {
     do{
         println("--- Welcome to the MY TASK MANAGER SYSTEM ---\n")
 
-        val options = arrayOf("ADD NEW TASK", "SHOW TASK LIST", "DELETE TASK", "EDIT TASK NAME")
+        val options = arrayOf("ADD NEW TASK", "SHOW TASK LIST", "MARK AS DONE", "DELETE TASK", "EDIT TASK NAME")
 
         val functions = arrayOf(
             { addTask() },
             { showTaskList() },
-//            { markAsDone() },
+            { markAsDone() },
             { deleteTask() },
             { editTaskName() }
         )

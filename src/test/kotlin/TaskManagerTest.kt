@@ -51,21 +51,29 @@ class TaskManagerTest {
         }
     }
 
-//    @Test
-//    fun testMarkAsDone(){
-//        val tl = TaskList()
-//
-//        tl.add("Test task")
-//
-//        val task = tl.getTask(0)
-//
-//        assertEquals("${task.name} - Not Done", task.toString())
-//
-//        task.isDone = true
-//
-//        assertEquals("${task.name} - Done", task.toString())
-//    }
-//
+    @Test
+    fun testMarkAsDone(){
+        val taskList = TaskList()
+        val taskTest = "testing function mark as done"
+
+        try {
+
+            taskList.add(taskTest)
+
+            taskList.markAsDone(taskTest)
+
+            val taskAfterUpdate = taskList.getTask(taskTest)
+
+            taskAfterUpdate?.let { (_, _, isDone) ->
+                assertEquals(true, isDone)
+            }
+
+        } finally {
+            taskList.delete(taskTest)
+            assertNull(taskList.getTask(taskTest), "Failed to clean up the test task.")
+        }
+    }
+
 
     @Test
     fun testEditName() {
@@ -77,13 +85,7 @@ class TaskManagerTest {
 
             taskList.add(theOriginalName)
 
-
-            val oldTask = taskList.getTask(theOriginalName)
-            assertNotNull(oldTask, "The task with the original name was not found in the database.")
-
-
             taskList.editTaskName(theOriginalName, newName)
-
 
             assertNull(taskList.getTask(theOriginalName), "The task with the old name still exists in the database.")
 

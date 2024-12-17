@@ -85,7 +85,7 @@ class TaskList {
     }
 
     fun markAsDone(name: String){
-        val query = "UPDATE task SET isDone = true WHERE name = ?"
+        val query = "UPDATE tasks SET isDone = true WHERE name = ?"
         val connection = connect()
         val preparedStatement = connection.prepareStatement(query)
 

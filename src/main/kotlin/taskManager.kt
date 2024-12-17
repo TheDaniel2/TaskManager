@@ -18,11 +18,20 @@ fun deleteTask(){
         taskList.delete(taskName)
     }
 }
-//
-//fun markAsDone(){
-//    taskManager("marked as done") { task -> task.isDone = true }
-//}
-//
+
+fun markAsDone(){
+    println("Which TASK do you want to mark as done?: ")
+    showTaskList()
+    val taskName = readln()
+    val taskInfo = taskList.getTask(taskName)
+    taskInfo?.let {
+        taskList.markAsDone(taskName)
+
+        return
+    }
+    println("The name is not found, impossible to continue the operation.")
+}
+
 
 fun editTaskName(){
     println("Which TASK do you want to change the name?: ")
