@@ -84,6 +84,31 @@ class TaskList {
         }
     }
 
+    fun markAsDone(name: String){
+        val query = "UPDATE task SET isDone = true WHERE name = ?"
+        val connection = connect()
+        val preparedStatement = connection.prepareStatement(query)
+
+        try {
+            preparedStatement.use {
+                it.setString(1, name)
+                val rowsAffected = it.executeUpdate()
+
+                if(rowsAffected > 0) {
+                    println("\nTask '$name' has been successfully marked as done")
+                } else {
+                    println("\nNo task with name '$name' found.")
+                }
+            }
+        } catch (e: SQLException){
+            println("Error updating task: ${e.message}")
+        } finally {
+            connection.close()
+            preparedStatement.close()
+        }
+
+    }
+
     fun isEmpty(): Boolean{
         return size() == 0
     }
